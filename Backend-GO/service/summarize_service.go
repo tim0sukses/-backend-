@@ -1,3 +1,4 @@
+// service/service.go
 package service
 
 import (
@@ -10,26 +11,34 @@ import (
 	"backend-summarizer/model"
 )
 
-func SaveFullSummary(s model.SummaryRequest) {
-	database.SaveSummary(s)
-}
-
-func FetchSummaries() []model.SummaryRequest {
-	return database.GetAllSummaries()
-}
-
-func CallMLModel(text string) string {
-	payload := map[string]string{"text": text}
-	jsonVal, _ := json.Marshal(payload)
+func ProcessSummary(req model.SummarizeRequest) (model.SummaryResponse, error) {
+	jsonVal, err := json.Marshal(req)
+	if err != nil {
+		return model.SummaryResponse{Status: "error", Summary: "Invalid request payload"}, err
+	}
 
 	resp, err := http.Post("https://api-capstone-kappa.vercel.app/process-text", "application/json", bytes.NewBuffer(jsonVal))
 	if err != nil {
-		return "Error contacting ML service"
+		return model.SummaryResponse{Status: "error", Summary: "Error contacting ML service"}, err
 	}
 	defer resp.Body.Close()
 
-	body, _ := io.ReadAll(resp.Body)
-	var result map[string]string
-	json.Unmarshal(body, &result)
-	return result["summary"]
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return model.SummaryResponse{Status: "error", Summary: "Failed to read ML response"}, err
+	}
+
+	var result model.SummaryResponse
+	if err := json.Unmarshal(body, &result); err != nil {
+		return model.SummaryResponse{Status: "error", Summary: "Invalid ML response format"}, err
+	}
+
+	// persist full response now: you may adjust SaveSummary signature.
+	database.SaveSummary(result)
+
+	return result, nil
+}
+
+func FetchSummaries() ([]model.SummaryResponse, error) {
+	return database.GetAllSummaries(), nil
 }

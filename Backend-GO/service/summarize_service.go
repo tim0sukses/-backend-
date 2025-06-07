@@ -10,17 +10,19 @@ import (
 	"backend-summarizer/model"
 )
 
-func ProcessSummary(text string) string {
-	summary := callMLModel(text)
-	database.SaveSummary(text, summary)
-	return summary
+func SaveFullSummary(s model.SummaryRequest) {
+	database.SaveSummary(s)
 }
 
-func callMLModel(text string) string {
+func FetchSummaries() []model.SummaryRequest {
+	return database.GetAllSummaries()
+}
+
+func CallMLModel(text string) string {
 	payload := map[string]string{"text": text}
 	jsonVal, _ := json.Marshal(payload)
 
-	resp, err := http.Post("http://localhost:5000/generate", "application/json", bytes.NewBuffer(jsonVal))
+	resp, err := http.Post("https://api-capstone-kappa.vercel.app/process-text", "application/json", bytes.NewBuffer(jsonVal))
 	if err != nil {
 		return "Error contacting ML service"
 	}
@@ -30,8 +32,4 @@ func callMLModel(text string) string {
 	var result map[string]string
 	json.Unmarshal(body, &result)
 	return result["summary"]
-}
-
-func FetchSummaries() []model.Summary {
-	return database.GetAllSummaries()
 }

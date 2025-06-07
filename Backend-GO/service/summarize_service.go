@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
 
 	"backend-summarizer/database"
 	"backend-summarizer/model"
@@ -31,6 +32,10 @@ func ProcessSummary(req model.SummarizeRequest) (model.SummaryResponse, error) {
 	var result model.SummaryResponse
 	if err := json.Unmarshal(body, &result); err != nil {
 		return model.SummaryResponse{Status: "error", Summary: "Invalid ML response format"}, err
+	}
+
+	if result.CreatedAt == "" {
+		result.CreatedAt = time.Now().Format(time.RFC3339)
 	}
 
 	// persist full response now: you may adjust SaveSummary signature.

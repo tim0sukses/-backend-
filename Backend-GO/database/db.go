@@ -7,7 +7,6 @@ import (
 	"backend-summarizer/model"
 
 	"github.com/lib/pq"
-	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB

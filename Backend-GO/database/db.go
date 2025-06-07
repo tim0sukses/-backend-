@@ -2,31 +2,42 @@
 package database
 
 import (
+	"backend-summarizer/model"
 	"database/sql"
 	"log"
+	"os"
 
-	"backend-summarizer/model"
-
+	"github.com/joho/godotenv"
 	"github.com/lib/pq"
-	_ "github.com/lib/pq"
 )
 
 var DB *sql.DB
 
 func InitDB() {
-	const dsn = "postgresql://postgres.rszsrrivgowtwvvqtegq:aGiWh1aWC3qLXfPZ@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres"
-	var err error
+	// Load .env file
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("Warning: .env file not found, relying on environment variables")
+	}
+
+	// Get DSN from environment
+	dsn := os.Getenv("POSTGRES_DSN")
+	if dsn == "" {
+		log.Fatal("POSTGRES_DSN not set in environment")
+	}
+
 	DB, err = sql.Open("postgres", dsn)
 	if err != nil {
 		log.Fatal("Error connecting to DB:", err)
 	}
+
 	if err = DB.Ping(); err != nil {
 		log.Fatal("Error pinging DB:", err)
 	}
+
 	log.Println("Connected to DB successfully")
 }
 
-// SaveSummary saves a full SummaryResponse record to the DB.
 // SaveSummary saves a full SummaryResponse record to the DB.
 func SaveSummary(res model.SummaryResponse) {
 	// Convert questions slice to Postgres array

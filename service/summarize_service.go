@@ -1,4 +1,3 @@
-// service/service.go
 package service
 
 import (
@@ -38,7 +37,6 @@ func ProcessSummary(req model.SummarizeRequest) (model.SummaryResponse, error) {
 		result.CreatedAt = time.Now().Format(time.RFC3339)
 	}
 
-	// persist full response now: you may adjust SaveSummary signature.
 	database.SaveSummary(result)
 
 	return result, nil

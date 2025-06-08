@@ -1,4 +1,3 @@
-// controller/controller.go
 package controller
 
 import (
@@ -10,7 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// HandleSummarize binds the user input, processes via service, and returns ML response.
 func HandleSummarize(c *gin.Context) {
 	var req model.SummarizeRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -27,7 +25,6 @@ func HandleSummarize(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 
-// GetSummaries returns all stored summaries.
 func GetSummaries(c *gin.Context) {
 	summaries, _ := service.FetchSummaries()
 	c.JSON(http.StatusOK, gin.H{"data": summaries})

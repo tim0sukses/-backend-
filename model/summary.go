@@ -1,4 +1,3 @@
-// model/model.go
 package model
 
 type SummarizeRequest struct {
@@ -9,7 +8,6 @@ type SummarizeRequest struct {
 }
 
 // MethodsUsed records which methods were used by the ML service
-// (returned in response).
 type MethodsUsed struct {
 	Questions string `json:"questions"`
 	Summary   string `json:"summary"`

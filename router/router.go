@@ -10,7 +10,7 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	// Middleware to add timestamp
+	// Generate waktu sekarang
 	r.Use(func(c *gin.Context) {
 		c.Set("timestamp", time.Now())
 		c.Next()

@@ -10,13 +10,14 @@ import (
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
 
-	// Generate waktu sekarang
 	r.Use(func(c *gin.Context) {
 		c.Set("timestamp", time.Now())
 		c.Next()
 	})
 
+	r.POST("/process-text", controller.HandleProcessText)
 	r.POST("/summarize", controller.HandleSummarize)
+	r.POST("/generate-question", controller.HandleGenerateQuestion)
 	r.GET("/history", controller.GetSummaries)
 
 	return r

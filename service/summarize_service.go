@@ -17,7 +17,7 @@ func ProcessSummary(req model.SummarizeRequest) (model.SummaryResponse, error) {
 		return model.SummaryResponse{Status: "error", Summary: "Invalid request payload"}, err
 	}
 
-	resp, err := http.Post("https://api-capstone-kappa.vercel.app/process-text", "application/json", bytes.NewBuffer(jsonVal))
+	resp, err := http.Post("https://api-capstone-production-1e95.up.railway.app/", "application/json", bytes.NewBuffer(jsonVal))
 	if err != nil {
 		return model.SummaryResponse{Status: "error", Summary: "Error contacting ML service"}, err
 	}

@@ -5,8 +5,10 @@ API backend untuk meringkas teks Bahasa Indonesia secara otomatis menggunakan mo
 ---
 
 ## Fitur
-- 🔁 `POST /summarize` — ringkas teks panjang
-- 📜 `GET /history` — lihat semua ringkasan yang tersimpan di database
+- 🔁 `POST /summarize` — Meringkas teks panjang.
+- ❓ `POST /generate-question` — Menghasilkan pertanyaan dari teks.
+- ⚙️ `POST /process-text` — Menghasilkan ringkasan & pertanyaan sekaligus dari satu input teks.
+- 📜 `GET /history` — Melihat semua ringkasan yang tersimpan di database (tidak termasuk Questions).
 
 ##  Cara Menjalankan 
 Pastikan sudah menginstal Docker Desktop dan mengaktifkannya, lalu jalankan command di bawah pada terminal didalam project ini
@@ -16,13 +18,12 @@ docker run -p 8080:8080 backend-summarizer
 ```
 ## Cara Menggunakan Endpoint
 POST http://localhost:8080/summarize
+POST http://localhost:8080/generate-question
+POST http://localhost:8080/process-text
 Request JSON:
 ```bash
 {
   "text": "Teks panjangmu...",
-  "length": "short"/"medium"/"long",
-  "include_questions": true/false,
-  "num_questions": masukan angka
 }
 
 ```

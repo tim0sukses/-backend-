@@ -1,6 +1,6 @@
 #  Backend Summarizer
 
-API backend untuk meringkas teks Bahasa Indonesia secara otomatis menggunakan model Python (TextRank) dan menyimpan hasil ringkasan ke PostgreSQL (Supabase).
+API backend untuk meringkas teks Bahasa Indonesia secara otomatis menggunakan model Python dan menyimpan hasil ringkasan ke PostgreSQL (Supabase).
 
 ---
 
@@ -8,7 +8,7 @@ API backend untuk meringkas teks Bahasa Indonesia secara otomatis menggunakan mo
 - 🔁 `POST /summarize` — Meringkas teks panjang.
 - ❓ `POST /generate-question` — Menghasilkan pertanyaan dari teks.
 - ⚙️ `POST /process-text` — Menghasilkan ringkasan & pertanyaan sekaligus dari satu input teks.
-- 📜 `GET /history` — Melihat semua ringkasan yang tersimpan di database (tidak termasuk Questions).
+- 📜 `GET /history` — Melihat semua ringkasan yang tersimpan di database (Questions tidak termasuk).
 
 ##  Cara Menjalankan 
 Pastikan sudah menginstal Docker Desktop dan mengaktifkannya, lalu jalankan command di bawah pada terminal didalam project ini

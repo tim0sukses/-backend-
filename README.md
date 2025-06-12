@@ -1,6 +1,6 @@
 #  Backend Summarizer
 
-API backend untuk meringkas teks Bahasa Indonesia secara otomatis menggunakan model Python dan menyimpan hasil ringkasan ke PostgreSQL (Supabase).
+API backend untuk meringkas dan mengenerate pertanyaan dari teks Bahasa Indonesia secara otomatis menggunakan model Python dan menyimpan hasil ringkasan ke PostgreSQL (Supabase).
 
 ---
 
